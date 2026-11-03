@@ -94,6 +94,22 @@ draft: true
 
 初始化时已升级兼容版本依赖，`npm audit --omit=dev` 无已知漏洞。完整审计仍报告开发检查工具链中的 14 个中危告警（ESLint / minimatch、Tailwind Typography / postcss-selector-parser）；未使用会破坏兼容性的 `npm audit fix --force`。这些工具不会包含在生成的静态网站中。
 
+## 博客评论
+
+文章末尾使用 [Giscus](https://giscus.app/zh-CN) 评论系统。读者通过 GitHub 登录，评论与回应保存在 `io-club/io-club.github.io` 的 GitHub Discussions；无需自建后端、数据库或在网站中放置访问令牌。
+
+- 组件：`src/components/blog/Comments.astro`。
+- 开关、仓库和分类配置：`src/data/comments.ts`。
+- GitHub Discussions 已开启，评论分类为 `Announcements`，仓库 ID 与分类 ID 已填好。
+- Giscus GitHub App 已安装并授权当前仓库。迁移到其他仓库时，由组织管理员[安装 Giscus GitHub App](https://github.com/apps/giscus/installations/new)，使用 “Only select repositories” 只授权目标仓库。
+- 网站无需个人访问令牌或额外 Secrets；新文章会自动使用同一评论配置。
+
+评论按稳定标识 `blog:<文章 ID>` 精确关联，例如 `blog:one-day-hackathon`。修改文章标题或站点域名不会改变关联；如果移动或重命名 Markdown 文件，需要保留原标识或迁移讨论。对应讨论会在第一次发表评论或回应时由 Giscus 创建。不要为了测试而发送虚假评论。
+
+评论使用简体中文、支持回应，按需加载，并跟随网站的深浅色设置切换。组件通过 Web Component 生命周期处理 Astro 页面跳转，切换文章时会加载该文章的讨论，不会沿用上一篇文章的评论。
+
+`giscus.json` 允许正式域名与本地开发地址加载评论。绑定新域名时，同步更新它的 `origins`。将 `commentsConfig.enabled` 改为 `false` 可以关闭所有文章的评论入口。审核、锁定或删除讨论请在仓库 Discussions 中操作。
+
 ## 社团素材与配色
 
 当前视觉参考社团招新传单：海军蓝 `#122f53`、暖橙 `#c94b1e`、米白 `#fffaf1`，辅以五个技术方向的便签配色。原始素材保留在项目内；首页传单通过 Astro 输出优化后的 WebP，点击招新传单才会打开完整原图。QQ 群号为 `163194527`，可以在 `src/data/club.ts` 统一修改。

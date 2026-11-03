@@ -1,0 +1,134 @@
+---
+import { Icon } from 'astro-icon/components';
+import { commentsConfig } from '~/data/comments';
+
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props;
+const discussionUrl = `https://github.com/${commentsConfig.repo}/discussions`;
+---
+
+{
+  commentsConfig.enabled && (
+    <section id="comments" aria-labelledby="comments-heading" class="comments-section">
+      <header class="comments-header">
+        <div>
+          <p class="comments-eyebrow">LET'S TALK</p>
+          <h2 id="comments-heading">文章讨论</h2>
+          <p class="comments-description">有问题、补充或新的想法？欢迎登录 GitHub，一起聊聊。</p>
+        </div>
+        <a href={discussionUrl} target="_blank" rel="noopener noreferrer" class="comments-link">
+          <Icon name="tabler:brand-github" class="h-4 w-4" />在 GitHub 查看讨论 <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+      <io-blog-comments data-light-theme={commentsConfig.lightTheme} data-dark-theme={commentsConfig.darkTheme}>
+        <giscus-widget
+          repo={commentsConfig.repo}
+          repoid={commentsConfig.repoId}
+          category={commentsConfig.category}
+          categoryid={commentsConfig.categoryId}
+          mapping="specific"
+          term={`blog:${postId}`}
+          strict="1"
+          reactionsenabled="1"
+          emitmetadata="0"
+          inputposition="top"
+          theme="preferred_color_scheme"
+          lang={commentsConfig.language}
+          loading="lazy"
+        />
+      </io-blog-comments>
+      <noscript>
+        <p class="comments-description">
+          启用 JavaScript 即可加载评论，也可以<a href={discussionUrl}>前往 GitHub 讨论区</a>。
+        </p>
+      </noscript>
+    </section>
+  )
+}
+
+<style>
+  .comments-section {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: 0 1.5rem 3.5rem;
+  }
+  .comments-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid var(--club-line);
+    padding-top: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .comments-eyebrow {
+    color: var(--club-orange);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    margin-bottom: 0.5rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--aw-color-text-heading);
+  }
+  .comments-description {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--aw-color-text-muted);
+    margin-top: 0.65rem;
+  }
+  .comments-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--aw-color-primary);
+    font-size: 0.75rem;
+    line-height: 1.8;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  io-blog-comments,
+  giscus-widget {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+  }
+  noscript a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<script>
+  import 'giscus';
+
+  class BlogComments extends HTMLElement {
+    private themeObserver?: MutationObserver;
+
+    connectedCallback() {
+      this.syncTheme();
+      this.themeObserver = new MutationObserver(() => this.syncTheme());
+      this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    disconnectedCallback() {
+      this.themeObserver?.disconnect();
+    }
+
+    private syncTheme() {
+      const theme = document.documentElement.classList.contains('dark')
+        ? this.dataset.darkTheme
+        : this.dataset.lightTheme;
+      if (theme) this.querySelector('giscus-widget')?.setAttribute('theme', theme);
+    }
+  }
+
+  if (!customElements.get('io-blog-comments')) customElements.define('io-blog-comments', BlogComments);
+</script>

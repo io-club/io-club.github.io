@@ -5,6 +5,7 @@ import merge from 'lodash.merge';
 import type { ImageMetadata } from 'astro';
 import Layout from '~/layouts/PageLayout.astro';
 import SinglePost from '~/components/blog/SinglePost.astro';
+import Comments from '~/components/blog/Comments.astro';
 import ToBlogLink from '~/components/blog/ToBlogLink.astro';
 
 import { getCanonical, getPermalink, getBlogPermalink } from '~/utils/permalinks';
@@ -90,11 +91,15 @@ const breadcrumbs = [
 ---
 
 <Layout metadata={metadata}>
-  <StructuredData slot="head" schema={articleSchema} />
+  <Fragment slot="head">
+    <StructuredData schema={articleSchema} />
+    <meta name="giscus:backlink" content={String(url)} />
+  </Fragment>
   <Breadcrumbs bar hideCurrent items={breadcrumbs} />
   <SinglePost post={{ ...post, image: image }} url={url}>
     {post.Content && <post.Content />}
   </SinglePost>
+  <Comments postId={post.id} />
   <ToBlogLink />
   <RelatedPosts post={post} />
 </Layout>
