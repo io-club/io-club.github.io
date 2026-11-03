@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+import { club } from '~/data/club';
+import poster from '~/assets/images/club-poster.jpg';
+import { getAsset } from '~/utils/permalinks';
+---
+
+<section id="join" class="club-join">
+  <div class="club-shell club-join-inner">
+    <div>
+      <p class="club-eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+      <h2>一群热爱技术和折腾的人，<br /><span>等你加入！</span></h2>
+      <p class="club-join-description">面向在校本科生，不限专业。技术小白、大佬都欢迎；有想法，就来试试吧。</p>
+      <div class="club-join-actions">
+        <a href={poster.src} target="_blank" rel="noopener noreferrer" class="club-join-button"
+          >看看招新传单 <Icon name="tabler:arrow-up-right" class="h-4 w-4" /></a
+        >
+        <a href={club.github} class="club-join-github">逛逛我们的 GitHub <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+    <club-copy-group class="club-qq-card">
+      <img src={getAsset('/images/mascot.png')} alt="IO 社吉祥物" width="76" height="73" loading="lazy" />
+      <p class="club-qq-label">加入 QQ 群 · 一起搞事</p>
+      <p class="club-qq-number">{club.qqGroup}</p>
+      <button type="button" class="club-copy-button" data-club-copy={club.qqGroup}
+        >复制群号 <Icon name="tabler:copy" class="h-4 w-4" /></button
+      >
+      <p class="club-copy-status" role="status" aria-live="polite" data-club-copy-status>
+        在 QQ 中搜索群号，认识你的新队友。
+      </p>
+    </club-copy-group>
+  </div>
+</section>
+
+<script>
+  class ClubCopyGroup extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('[data-club-copy]');
+      const status = this.querySelector<HTMLElement>('[data-club-copy-status]');
+      if (!button) return;
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.clubCopy || '');
+          if (status) status.textContent = '群号已复制，打开 QQ 搜索并申请加入吧。';
+        } catch {
+          if (status) status.textContent = '请长按或选中上方群号，手动复制到 QQ。';
+        }
+      });
+    }
+  }
+  if (!customElements.get('club-copy-group')) customElements.define('club-copy-group', ClubCopyGroup);
+</script>

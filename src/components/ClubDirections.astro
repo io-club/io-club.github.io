@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+import { directions } from '~/data/club';
+import { getPermalink } from '~/utils/permalinks';
+
+interface Props {
+  detailed?: boolean;
+}
+const { detailed = false } = Astro.props;
+---
+
+<div class:list={['club-direction-grid', { 'is-detailed': detailed }]}>
+  {
+    directions.map((direction) => (
+      <article class={`club-direction club-note-${direction.color}`} id={detailed ? direction.id : undefined}>
+        <div class="club-direction-top">
+          <span class="club-number">{direction.number}</span>
+          <Icon name={direction.icon} class="h-9 w-9" />
+        </div>
+        <p class="club-micro">{direction.english}</p>
+        <h3>{direction.title}</h3>
+        {detailed && <p class="club-direction-description">{direction.description}</p>}
+        <ul>
+          {direction.topics.map((topic) => (
+            <li>{topic}</li>
+          ))}
+        </ul>
+        {!detailed && (
+          <a
+            href={getPermalink(`/about/#${direction.id}`)}
+            class="club-direction-link"
+            aria-label={`了解${direction.title}方向`}
+          >
+            认识这个方向 <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </article>
+    ))
+  }
+</div>

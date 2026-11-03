@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { SITE } from 'astrowind:config';
+import Layout from '~/layouts/PageLayout.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import ClubDirections from '~/components/ClubDirections.astro';
+import ClubJoin from '~/components/ClubJoin.astro';
+import poster from '~/assets/images/club-poster.jpg';
+import { club, opportunities } from '~/data/club';
+import { getPermalink, getAsset } from '~/utils/permalinks';
+
+const metadata = { title: 'IO Club · 探索实践，从 0 到 ∞', ignoreTitleTemplate: true };
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.site,
+  inLanguage: 'zh-CN',
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    alternateName: `${club.labName} · ${club.chineseName}`,
+    url: SITE.site,
+    sameAs: [club.github],
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <StructuredData slot="head" schema={schema} />
+  <section id="welcome" class="club-hero">
+    <div class="club-shell">
+      <div class="club-hero-topline"><span>TECH. CREATE. TOGETHER.</span><span>I/O = INFINITE OPPORTUNITIES</span></div>
+      <div class="club-hero-grid">
+        <div>
+          <p class="club-eyebrow">{club.labName} · {club.chineseName}</p>
+          <h1>在这里，<br />把想法<em>做出来。</em></h1>
+          <p class="club-hero-description">
+            一群热爱技术和折腾的人，一起写代码、做硬件、探索新世界。带上你的好奇心，和 IO 社一起，把灵感变成真实的作品。
+          </p>
+          <div class="club-hero-actions">
+            <a href={getPermalink('/#join')} class="btn-primary"
+              >找到你的新队友 <Icon name="tabler:arrow-up-right" class="ml-2 h-4 w-4" /></a
+            >
+            <a href={getPermalink('/#explore')} class="btn"
+              >探索五大方向 <Icon name="tabler:arrow-down" class="ml-2 h-4 w-4" /></a
+            >
+          </div>
+          <div class="club-smallprint">
+            <span><Icon name="tabler:school" class="h-4 w-4" />在校本科生，不限专业</span>
+            <span><Icon name="tabler:sparkles" class="h-4 w-4" />技术小白 / 大佬都欢迎</span>
+          </div>
+        </div>
+        <div class="club-collage">
+          <div class="club-photo">
+            <Image
+              src={poster}
+              width={1000}
+              format="webp"
+              quality={85}
+              layout="none"
+              loading="eager"
+              fetchpriority="high"
+              alt="IO 社招新传单：热爱技术和折腾的人，等你加入"
+            />
+            <span class="club-photo-caption">CODE. DEBUG. REPEAT. :)</span>
+          </div>
+          <span class="club-doodle" aria-hidden="true">✦</span>
+          <div class="club-mascot-sticker">
+            <img src={getAsset('/images/mascot.png')} width="94" height="91" alt="IO 社吉祥物" />
+            <div><b>你的灵感搭子，已就位。</b><span>IO 社吉祥物<br />一起探索，一起折腾。</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="club-ribbon">
+    <div class="club-shell">
+      <span>GOOD IDEAS, BETTER TOGETHER.</span><strong>✦ &nbsp; 探索 · 实践，从 0 到 ∞ &nbsp; ✦</strong><span
+        >有想法，就来试试吧。</span>
+    </div>
+  </div>
+
+  <section id="explore" class="club-shell club-section">
+    <div class="club-section-heading">
+      <div><p class="club-eyebrow">FIND YOUR THING</p><h2>五个方向，无限可能。</h2></div>
+      <p>从互联网到真实世界，从一行代码到一件作品。找到让你眼睛发亮的方向，也欢迎跨方向一起探索。</p>
+    </div>
+    <ClubDirections />
+  </section>
+
+  <section id="community" class="club-shell club-community">
+    <div class="club-community-intro">
+      <p class="club-eyebrow">MORE THAN A CLUB</p>
+      <h2>一个人的奇思妙想，<br />一群人的动手现场。</h2>
+      <p>
+        技术不只在课本里，也在一起调试的小车、反复修改的代码、终于跑通的项目里。在 IO
+        社，和有趣的人一起学、一起做，让每一个“要不试试”都有机会发生。
+      </p>
+      <a href={getPermalink('/about')} class="club-inline-link">进一步认识 IO 社 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="club-opportunities">
+      {
+        opportunities.map((item) => (
+          <article>
+            <>
+              <Icon name={item.icon} class="club-opportunity-icon" />
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <BlogLatestPosts
+    id="journal"
+    title="把折腾的过程，也记录下来。"
+    information="技术笔记、项目实践与社团动态。让一次分享，成为下一次探索的起点。"
+    linkText="翻翻我们的笔记"
+    count={3}
+    classes={{ container: 'max-w-6xl' }}
+  />
+  <ClubJoin />
+</Layout>

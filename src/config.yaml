@@ -1,0 +1,70 @@
+site:
+  name: IO Club
+  site: 'https://io-club.github.io'
+  base: '/'
+  trailingSlash: true
+
+  googleSiteVerificationId: null
+
+# Default SEO metadata
+metadata:
+  title:
+    default: 'IO Club · 探索实践，从 0 到 ∞'
+    template: '%s — IO Club'
+  description: '高性能嵌入式实验室 · IO 社。一群热爱技术和折腾的人，在互联网、AI 芯片、物联网与嵌入式、元宇宙、人工智能五个方向一起探索，把想法变成真实的作品。'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: IO Club
+    images:
+      - url: '/social-card.png'
+        width: 1200
+        height: 630
+    type: website
+  twitter:
+    cardType: summary_large_image
+
+i18n:
+  language: zh-CN
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true
+    postsPerPage: 8
+
+    post:
+      isEnabled: true
+      permalink: '/blog/%slug%' # Keep articles under /blog/.
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null # or "G-XXXXXXXXXX"
+
+ui:
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

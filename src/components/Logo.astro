@@ -1,0 +1,13 @@
+---
+import { SITE } from 'astrowind:config';
+import { getAsset } from '~/utils/permalinks';
+---
+
+<span class="flex items-center gap-3 whitespace-nowrap font-bold tracking-tight text-heading">
+  <img src={getAsset('/images/mascot.png')} alt="" width="44" height="42" class="h-11 w-11 rounded-full" />
+  <span
+    ><span class="block text-xl">{SITE.name}</span><span
+      class="hidden text-[10px] font-medium tracking-wider text-muted sm:block">高性能嵌入式实验室 · IO 社</span
+    ></span
+  >
+</span>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#122f53" stroke-opacity=".06"/></pattern></defs>
+  <rect width="1200" height="630" fill="#fff6e8"/><rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="0" y="560" width="1200" height="70" fill="#122f53"/>
+  <text x="72" y="105" fill="#c94b1e" font-family="Arial,sans-serif" font-size="23" font-weight="700" letter-spacing="4">TECH. CREATE. TOGETHER.</text>
+  <text x="72" y="235" fill="#122f53" font-family="'Microsoft YaHei',sans-serif" font-size="74" font-weight="800">把想法，</text>
+  <text x="72" y="340" fill="#122f53" font-family="'Microsoft YaHei',sans-serif" font-size="74" font-weight="800">变成真实的作品。</text>
+  <path d="M76 364Q390 351 650 367" stroke="#ee7b37" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <text x="76" y="445" fill="#50627a" font-family="'Microsoft YaHei',sans-serif" font-size="28">高性能嵌入式实验室 · IO 社</text>
+  <g transform="rotate(7 955 300)"><rect x="800" y="140" width="320" height="310" rx="18" fill="#122f53"/><text x="960" y="315" fill="#ffb15d" font-family="Arial,sans-serif" font-size="114" font-weight="700" text-anchor="middle">I/O</text><text x="960" y="386" fill="#fff6e8" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" letter-spacing="2">FROM ZERO TO INFINITY</text></g>
+  <text x="72" y="604" fill="#fff6e8" font-family="Arial,sans-serif" font-size="24">IO CLUB</text><text x="1128" y="604" fill="#ffb15d" font-family="Arial,sans-serif" font-size="22" text-anchor="end">io-club.github.io</text>
+</svg>

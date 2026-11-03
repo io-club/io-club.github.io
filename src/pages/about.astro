@@ -1,0 +1,71 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '~/layouts/PageLayout.astro';
+import ClubDirections from '~/components/ClubDirections.astro';
+import ClubJoin from '~/components/ClubJoin.astro';
+import { club, opportunities } from '~/data/club';
+import { getAsset } from '~/utils/permalinks';
+
+const metadata = {
+  title: '关于 IO 社',
+  description: '认识高性能嵌入式实验室 · IO 社，了解五大技术方向、项目实践与加入方式。',
+};
+---
+
+<Layout metadata={metadata}>
+  <div class="club-shell club-about">
+    <section class="club-about-lead">
+      <div>
+        <p class="club-eyebrow">{club.labName} · {club.chineseName}</p>
+        <h1>探索、实践，<br />从 0 到 ∞。</h1>
+        <p class="club-about-description">
+          这里是 IO
+          社，一群热爱技术和折腾的人。我们从真实的问题出发，把学习放进项目，把好奇心变成行动，和有趣的人一起，把想法变成真实的作品。
+        </p>
+      </div>
+      <img src={getAsset('/images/mascot.png')} alt="IO 社吉祥物" width="154" height="148" />
+    </section>
+
+    <section class="club-section" aria-labelledby="directions-title">
+      <div class="club-section-heading">
+        <div><p class="club-eyebrow">OUR PLAYGROUND</p><h2 id="directions-title">从你感兴趣的方向开始。</h2></div><p>
+          五大技术方向，让软件、硬件与创意在这里相遇。
+        </p>
+      </div>
+      <ClubDirections detailed />
+    </section>
+
+    <section class="club-community" aria-labelledby="together-title">
+      <div class="club-community-intro">
+        <p class="club-eyebrow">LEARN BY BUILDING</p><h2 id="together-title">边学边做，<br />也有人和你一起。</h2><p>
+          一个还不成熟的想法、一个暂时没解决的
+          Bug，都可以成为交流的开始。对未知保持好奇，尊重不同的经验，让分享与协作推动项目向前。
+        </p>
+      </div>
+      <div class="club-opportunities">
+        {
+          opportunities.map((item) => (
+            <article>
+              <>
+                <Icon name={item.icon} class="club-opportunity-icon" />
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="club-section" aria-labelledby="welcome-title">
+      <p class="club-eyebrow">EVERYONE STARTS SOMEWHERE</p><h2 id="welcome-title">
+        不必等到“足够厉害”，才来认识我们。
+      </h2>
+      <p class="club-about-description mt-5">
+        面向在校本科生，不限专业。无论是刚开始学习的技术小白，还是已经有项目经验的大佬，都欢迎带着问题和想法加入。通过下方
+        QQ 群，认识你的新队友。
+      </p>
+    </section>
+  </div>
+  <ClubJoin />
+</Layout>
